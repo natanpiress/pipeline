@@ -1,0 +1,12 @@
+stages:
+  - build
+  
+
+variables:
+  DOTENV_FILE: .env
+
+build:
+  stage: build
+  script:
+    - source $DOTENV_FILE
+    - echo "$TAG_NAME"

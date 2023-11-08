@@ -39,11 +39,24 @@ jobs:
       - name: Check output
         run: echo ${{ steps.hash.outputs.short_ref }}  
 
+      - uses: actions/checkout@v3
+      - uses: benjlevesque/short-sha@v2.2
+        id: short-sha
+        with:
+          length: 6
+      - run: echo $SHA
+        env:
+          SHA: ${{ steps.short-sha.outputs.sha }}
+      - run: echo $SHA
+        env:
+          SHA: ${{ env.SHA }}
+
       - name: Build and push
         uses: docker/build-push-action@v3
         with:
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/pipeline:${{ steps.vars.outputs.short_ref }}.${{ github.sha }}
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/pipeline:${{ steps.vars.outputs.short_ref }}.${{ steps.short-sha.outputs.sha }}
+
       
           
           

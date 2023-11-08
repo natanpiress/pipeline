@@ -25,20 +25,6 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      #- name: Get Time
-      #  id: time
-      #  uses: nanzm/get-time-action@v1.1
-      #  with:
-      #    timeZone: -3
-      #    format: 'mm.ss'
-
-      #- name: Usage Time
-      #  env:
-      #    TIME: "${{ steps.time.outputs.time }}"
-      #  run: |
-      #    echo $TIME 
-      #    echo $ ls
-
       - name: Set output
         id: vars
         run: echo ::set-output name=short_ref::${GITHUB_REF#refs/*/}
@@ -46,13 +32,19 @@ jobs:
       - name: Check output
         run: echo ${{ steps.vars.outputs.short_ref }}  
 
+    
+      - name: Set UUID
+        id: generate-uuid
+        uses: filipstefansson/uuid-action@v1
+        with:
+          name: ${{ github.sha }}
+           
+      - name: Get the UUID
+        run: echo "UUID is ${{ steps.generate-uuid.outputs.uuid }}"
+
       - name: Build and push
         uses: docker/build-push-action@v3
         with:
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/pipeline:${{ steps.vars.outputs.short_ref }}
-      
-
-            
-
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/pipeline:${{ steps.vars.outputs.short_ref }}.${{ steps.generate-uuid.outputs.uuid }}
 

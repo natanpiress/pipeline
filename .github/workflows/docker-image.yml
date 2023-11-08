@@ -34,10 +34,10 @@ jobs:
 
       - name: pegando hash commit
         id: hash
-        run: echo /home/natan/SRE/github/pipeline/.git/refs/heads/${{ steps.vars.outputs.short_ref }} 
+        run: echo /home/natan/SRE/github/pipeline/.git/refs/heads/
 
       - name: Check output
-        run: echo ${{ steps.vars.outputs }}  
+        run: echo ${{ steps.vars.outputs.hash }}  
 
       - name: Build and push
         uses: docker/build-push-action@v3

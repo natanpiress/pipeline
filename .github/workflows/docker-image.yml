@@ -36,6 +36,9 @@ jobs:
         id: hash
         run: echo /home/natan/SRE/github/pipeline/.git/refs/heads/${{ steps.vars.outputs.short_ref }} 
 
+      - name: Check output
+        run: echo ${{ steps.vars.outputs }}  
+
       - name: Build and push
         uses: docker/build-push-action@v3
         with:

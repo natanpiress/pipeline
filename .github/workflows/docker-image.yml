@@ -34,15 +34,12 @@ jobs:
 
       - name: pegando hash commit
         id: hash
-        run: echo ::set-output name=short_ref::${GITHUD_REF#heads/*/}
-        
-      - name: Check output
-        run: echo ${{ steps.hash.outputs.short_ref }}
+        run: echo /home/natan/SRE/github/pipeline/.git/refs/heads/${{ steps.vars.outputs.short_ref }} 
 
       - name: Build and push
         uses: docker/build-push-action@v3
         with:
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/pipeline:${{ steps.vars.outputs.short_ref }}.${{ steps.hash.outputs.short_ref }} 
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/pipeline:${{ steps.vars.outputs.short_ref }}.${{ steps.hash }} 
       
           

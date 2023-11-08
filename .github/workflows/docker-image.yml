@@ -2,8 +2,9 @@ name: pipeline CI
 on:
   push:
     branches:
-      - main
-      - master
+      - stg
+      - prod
+      - dev
 run-name: primeira pipeline teste NP
 jobs:
   CI-CD:
@@ -42,5 +43,14 @@ jobs:
         with:
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/pipeline:${{ steps.time.outputs.time }}
+      
+      - name: Set output
+        id: vars
+        run: echo ::set-output name=short_ref::${GITHUB_REF#refs/*/}
+         
+      - name: Check output
+        run: echo ${{ steps.vars.outputs.short_ref }}
+          
 
+      
 

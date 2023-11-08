@@ -4,6 +4,9 @@ on:
     branches:
       - main
       - master
+      - dev
+      - stg
+      - prod
 run-name: primeira pipeline teste NP
 jobs:
   CI-CD:

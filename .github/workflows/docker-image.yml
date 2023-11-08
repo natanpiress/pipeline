@@ -34,7 +34,7 @@ jobs:
 
       - name: pegando hash commit
         id: hash
-        run: echo ::set-output name=short_ref::${GITHUB_sha#refs/*/}
+        run: echo ::set-output name=short_ref::${GITHUB_sha#refs/*/}${{ steps.vars.outputs.short_ref }}
 
       - name: Check output
         run: echo ${{ steps.hash.outputs.short_ref }}  
@@ -43,7 +43,7 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/pipeline:${{ steps.vars.outputs.short_ref }}.${{ github_sha }}
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/pipeline:${{ steps.vars.outputs.short_ref }}.${{ github.sha }}
       
           
           

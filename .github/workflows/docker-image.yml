@@ -36,11 +36,11 @@ jobs:
           TIME: "${{ steps.time.outputs.time }}"
         run: |
           echo $TIME 
+          echo $ ls
 
       - name: Build and push
         uses: docker/build-push-action@v3
         with:
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/pipeline:${{ steps.time.outputs.time }}
-
 

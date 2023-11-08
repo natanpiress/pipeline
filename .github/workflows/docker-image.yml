@@ -43,7 +43,7 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/pipeline:${{ steps.vars.outputs.short_ref }}.${{ github.sha }}
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/pipeline:${{ steps.vars.outputs.short_ref }}.${{ github.sha.short_ref }}
       
           
           

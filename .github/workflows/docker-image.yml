@@ -25,30 +25,34 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Get Time
-        id: time
-        uses: nanzm/get-time-action@v1.1
-        with:
-          timeZone: -3
-          format: 'mm.ss'
+      #- name: Get Time
+      #  id: time
+      #  uses: nanzm/get-time-action@v1.1
+      #  with:
+      #    timeZone: -3
+      #    format: 'mm.ss'
 
-      - name: Usage Time
-        env:
-          TIME: "${{ steps.time.outputs.time }}"
-        run: |
-          echo $TIME 
-          echo $ ls
+      #- name: Usage Time
+      #  env:
+      #    TIME: "${{ steps.time.outputs.time }}"
+      #  run: |
+      #    echo $TIME 
+      #    echo $ ls
+
+      - name: Set output
+        id: vars
+        run: echo ::set-output name=short_ref::${GITHUB_REF#refs/*/}
+
+      - name: Check output
+        run: echo ${{ steps.vars.outputs.short_ref }}  
 
       - name: Build and push
         uses: docker/build-push-action@v3
         with:
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/pipeline:${{ steps.time.outputs.time }}
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/pipeline:${{ steps.vars.outputs.short_ref }}
       
-      - name: Set output
-        id: vars
-        run: echo ::set-output name=short_ref::${GITHUB_REF#refs/*/}
+
             
-      - name: Check output
-        run: echo ${{ steps.vars.outputs.short_ref }}
+
 

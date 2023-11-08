@@ -39,14 +39,14 @@ jobs:
       - name: Check output
         run: echo ${{ steps.hash.outputs.short_ref }}  
 
-      - name: Step
-        run: echo ${GITHUB_SHA::7}
+      - name: Print short SHA
+        run: echo "Short SHA is ${{ env.SHORT_SHA }}"
 
       - name: Build and push
         uses: docker/build-push-action@v3
         with:
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/pipeline:${{ steps.vars.outputs.short_ref }}.${{ github.sha }}
-      
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/pipeline:${{ steps.vars.outputs.short_ref }}.${{ env.SHORT_SHA }}"
+
           
           

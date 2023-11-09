@@ -32,13 +32,6 @@ jobs:
       - name: Check output
         run: echo ${{ steps.vars.outputs.short_ref }}  
 
-      - name: pegando hash commit
-        id: hash
-        run: echo ::set-output name=short_ref::${GITHUB_sha#refs/*/}${{ steps.vars.outputs.short_ref }}
-
-      - name: Check output
-        run: echo ${{ steps.hash.outputs.short_ref }}  
-
       - uses: actions/checkout@v3
       - uses: benjlevesque/short-sha@v2.2
         id: short-sha

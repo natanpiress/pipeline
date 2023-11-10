@@ -5,7 +5,7 @@ metadata:
   labels:
     app: app
 spec:
-  replicas: 5
+  replicas: 2
   selector:
     matchLabels:
       app: app
@@ -14,11 +14,18 @@ spec:
       labels:
         app: app
       annotations:
-        prometheus.io/scrape: 'true' 
-        prometheus.io/port: '5000'
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "5000"
     spec:
       containers:
-      - name: app
-        image: natanpiress/pipeline:56.08
-        ports:
-        - containerPort: 80
+        - name: app
+          image: 'natanpiress/pipeline:main-682314'
+          resources:
+            limits:
+              memory: 200Mi
+              cpu: 1
+            requests:
+              memory: 100Mi
+              cpu: 100m
+          ports:
+            - containerPort: 80
